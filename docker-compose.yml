@@ -1,0 +1,22 @@
+version: '3.1'
+services:
+  web:
+    build:
+      context: ./
+    volumes:
+      - ./src:/var/www
+    environment:
+      APACHE_DOCUMENT_ROOT: /var/www/${PROJECT_NAME}/public
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    tty: true
+    stdin_open: true
+  db:
+    image: postgres:10
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_PASSWORD: dbpass
+      POSTGRES_DB: laravel_test_db
